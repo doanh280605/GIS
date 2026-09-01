@@ -1,0 +1,14 @@
+node_modules
+.next
+.next-*
+dist
+.env
+.env.local
+*.log
+postgres_data
+ai-debug
+backend/ai-debug
+.codex
+.DS_Store
+coverage
+*.tsbuildinfo

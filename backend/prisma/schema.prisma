@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AlertType {
+  NEW_BUILDING
+  EXPANDED_BUILDING
+  POSSIBLE_ILLEGAL_CONSTRUCTION
+  LAND_USE_CHANGE
+  ROAD_CHANGE
+  WATER_CANAL_ENCROACHMENT
+}
+
+enum AlertStatus {
+  NEW
+  UNDER_REVIEW
+  FIELD_INSPECTION
+  RESOLVED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      String
+  createdAt DateTime @default(now())
+}
+
+model Department {
+  id       String  @id @default(cuid())
+  name     String  @unique
+  color    String
+  alerts   ChangeAlert[]
+  inspectors Inspector[]
+}
+
+model Inspector {
+  id           String     @id @default(cuid())
+  name         String
+  phone        String
+  email        String     @unique
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+}
+
+model Parcel {
+  id              String   @id @default(cuid())
+  parcelId        String   @unique @map("parcel_id")
+  houseNumber     String   @map("house_number")
+  streetName      String   @map("street_name")
+  hamlet          String
+  landLotNumber   String   @map("land_lot_number")
+  mapSheetNumber  String   @map("map_sheet_number")
+  ownerName       String   @map("owner_name")
+  areaM2          Float    @map("area_m2")
+  landUseType     String   @map("land_use_type")
+  gpsLat          Float    @map("gps_lat")
+  gpsLng          Float    @map("gps_lng")
+  polygonGeojson  Json     @map("polygon_geojson")
+  buildings       Building[]
+  alerts          ChangeAlert[]
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+}
+
+model Building {
+  id             String @id @default(cuid())
+  parcelId       String @map("parcel_id")
+  parcel         Parcel @relation(fields: [parcelId], references: [id])
+  name           String
+  floors         Int
+  footprintM2    Float  @map("footprint_m2")
+  polygonGeojson Json   @map("polygon_geojson")
+}
+
+model ChangeAlert {
+  id             String       @id @default(cuid())
+  title          String
+  type           AlertType
+  status         AlertStatus  @default(NEW)
+  confidence     Float
+  location       String
+  gpsLat         Float        @map("gps_lat")
+  gpsLng         Float        @map("gps_lng")
+  parcelId       String       @map("parcel_id")
+  parcel         Parcel       @relation(fields: [parcelId], references: [id])
+  departmentId   String       @map("department_id")
+  department     Department   @relation(fields: [departmentId], references: [id])
+  detectedAt     DateTime     @default(now()) @map("detected_at")
+  notes          InspectionNote[]
+  images         SatelliteImage[]
+}
+
+model InspectionNote {
+  id        String      @id @default(cuid())
+  alertId   String      @map("alert_id")
+  alert     ChangeAlert @relation(fields: [alertId], references: [id])
+  author    String
+  content   String
+  createdAt DateTime    @default(now()) @map("created_at")
+}
+
+model SatelliteImage {
+  id        String      @id @default(cuid())
+  alertId   String      @map("alert_id")
+  alert     ChangeAlert @relation(fields: [alertId], references: [id])
+  kind      String
+  imageUrl  String      @map("image_url")
+  capturedAt DateTime   @map("captured_at")
+}

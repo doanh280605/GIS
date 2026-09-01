@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0",
+  "annotationVersion": "exact-pair-reviewed-rois-v3",
+  "id": "screenshot-2026-08-25-exact-pair",
+  "images": {
+    "oldPath": "/Users/Doanh/Desktop/Screenshot 2026-08-25 at 21.49.29.png",
+    "currentPath": "/Users/Doanh/Desktop/Screenshot 2026-08-25 at 21.49.02.png"
+  },
+  "capture": {
+    "provider": "unknown-screenshot-provider",
+    "sensor": "unknown-screenshot-source",
+    "oldDate": "2026-08-25",
+    "currentDate": "2026-08-25",
+    "metersPerPixel": null,
+    "crs": null,
+    "provenance": "User-supplied labeled map screenshots; not georeferenced source imagery."
+  },
+  "split": {
+    "partition": "evaluation",
+    "geographyGroup": "exact-screenshot-location-1",
+    "dateGroup": "2026-08-25",
+    "providerGroup": "unknown-screenshot-provider"
+  },
+  "positives": [
+    {
+      "id": "reviewed-x3-construction-roi",
+      "changeClass": "construction_or_clearing",
+      "polygon": [[628, 258], [999, 258], [999, 490], [628, 490]],
+      "geometryQuality": "roi",
+      "reviewer": "user-reviewed",
+      "annotationVersion": "exact-pair-reviewed-rois-v3"
+    },
+    {
+      "id": "reviewed-x37-lower-left-roi",
+      "changeClass": "clearing_or_construction",
+      "polygon": [[619, 1327], [752, 1327], [752, 1414], [619, 1414]],
+      "geometryQuality": "roi",
+      "reviewer": "user-reviewed",
+      "annotationVersion": "exact-pair-reviewed-rois-v3"
+    },
+    {
+      "id": "reviewed-center-field-fountain-roi",
+      "changeClass": "water_feature_or_fountain",
+      "polygon": [[608, 440], [695, 440], [695, 535], [608, 535]],
+      "geometryQuality": "roi",
+      "reviewer": "human-reviewed-from-source-pair",
+      "annotationVersion": "exact-pair-reviewed-rois-v3",
+      "notes": "Coarse reviewed bounding ROI around the visible center-field fountain; this is not an exact pixel mask."
+    },
+    {
+      "id": "reviewed-removed-compact-structure-roi",
+      "changeClass": "removed_or_materially_changed_compact_structure",
+      "polygon": [[2145, 610], [2240, 610], [2240, 695], [2145, 695]],
+      "geometryQuality": "roi",
+      "reviewer": "human-reviewed-from-source-pair",
+      "annotationVersion": "exact-pair-reviewed-rois-v3",
+      "notes": "Human-reviewed coarse ROI around a compact structure visible in OLD and absent or materially changed in CURRENT. This is a diagnostic object ROI, not an exact pixel mask."
+    }
+  ],
+  "ignoredOrUncertain": [
+    {
+      "id": "all-other-unreviewed-imagery",
+      "reason": "Only X3, X37, the center-field fountain, and the removed compact-structure ROI have been reviewed positive. All other areas remain ignored until annotated."
+    }
+  ],
+  "reviewedNegativeRegions": [],
+  "unreviewedPolicy": "ignore"
+}
